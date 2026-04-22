@@ -1,0 +1,7 @@
+llama-index
+llama-index-llms-gemini
+llama-index-embeddings-gemini
+google-generativeai
+fhir.resources
+python-dotenv
+streamlit
