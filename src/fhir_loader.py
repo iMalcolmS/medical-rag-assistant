@@ -20,6 +20,18 @@ def patient_to_text(patient):
     birth_date = patient.get("birthDate", "Unknown")
     return f"Patient: {full_name} | Gender: {gender} | Date Birth: {birth_date}"
 
+def extract_medications(bundle):
+    medications = []
+    for med in extract_resources(bundle, "MedicationRequest"):
+        name = med.get("medicationCodeableConcept", {})
+        display = name.get("text") or name.get("coding", [{}])[0].get("display", "Unknown")
+        status = med.get("status", "unknown")
+        medications.append({
+            "name": display,
+            "status": status
+        })
+    return medications
+
 def condition_to_text(condition):
     code = condition.get("code",{})
     display = code.get("text") or code.get("coding", [{}])[0].get("display","Unknown")
@@ -48,3 +60,41 @@ def bundle_to_documents(filepath):
         documents.append(observation_to_text(observation))
     
     return documents 
+
+def get_risk_level(condition_name):
+    high_risk = ["cancer", "diabetes", "stroke", "heart attack", "covid"]
+    medium_risk = ["sinusitis", "fracture", "otitis", "concussion"]
+    
+    name_lower = condition_name.lower()
+    
+    if any(word in name_lower for word in high_risk):
+        return "high"
+    elif any(word in name_lower for word in medium_risk):
+        return "medium"
+    else:
+        return "low"
+
+def extract_timeline(bundle):
+    events = []
+    
+    for condition in extract_resources(bundle, "Condition"):
+        code = condition.get("code", {})
+        display = code.get("text") or code.get("coding", [{}])[0].get("display", "Unknown")
+        date = condition.get("onsetDateTime", "")
+        events.append({
+            "date": date,
+            "type": "Condition",
+            "description": display
+        })
+
+    for obs in extract_resources(bundle, "Observation"):
+        code = obs.get("code", {})
+        display = code.get("text") or code.get("coding", [{}])[0].get("display", "Unknown")
+        date = obs.get("effectiveDateTime", "")
+        events.append({
+            "date": date,
+            "type": "Observation",
+            "description": display
+        })
+
+    return sorted(events, key=lambda x: x["date"])
