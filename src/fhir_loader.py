@@ -125,6 +125,47 @@ def medication_to_text(med):
     return f"{display} | prescribed: {authored} | status: {med.get('status', 'unknown')}"
 
 
+def summarise_medications(medications):
+    """Group repeat prescriptions of the same drug into one line.
+
+    Synthea creates a new MedicationRequest for every renewal, so the raw list
+    repeats the same drug many times. One line per drug (first and last date,
+    number of prescriptions, latest status) is shorter and easier to retrieve.
+    """
+    by_drug = defaultdict(list)
+    for med in medications:
+        name = _concept_text(med.get("medicationCodeableConcept"))
+        by_drug[name].append((med.get("authoredOn", ""), med.get("status", "unknown")))
+
+    lines = []
+    for name, entries in by_drug.items():
+        entries.sort()
+        first, last = _date_only(entries[0][0]), _date_only(entries[-1][0])
+        period = first if first == last else f"{first} to {last}"
+        count = len(entries)
+        plural = "prescription" if count == 1 else "prescriptions"
+        lines.append(f"{name} | {period} | {count} {plural} | latest status: {entries[-1][1]}")
+    # Most recently prescribed first
+    return sorted(lines, key=lambda line: line.split(" | ")[1][-10:], reverse=True)
+
+
+# Synthea records social determinants of health (employment, education,
+# housing, ...) as Condition resources. They are kept in their own document so
+# that "Which diseases does the patient have?" is not answered with
+# "full-time employment". Keyword list, not an official FHIR category.
+SOCIAL_KEYWORDS = (
+    "employment", "education", "labor force", "high school", "criminal record",
+    "social isolation", "social contact", "housing", "homeless", "transport",
+    "stress", "intimate partner", "violence", "refugee", "unemployed",
+    "armed forces", "medication review due", "risk activity",
+)
+
+
+def is_social_finding(condition):
+    name = _concept_text(condition.get("code")).lower()
+    return any(keyword in name for keyword in SOCIAL_KEYWORDS)
+
+
 # --------------------------------------------------------------------------
 # Bundle -> patient-scoped documents
 # --------------------------------------------------------------------------
@@ -156,15 +197,18 @@ def bundle_to_documents(filepath):
         extract_resources(bundle, "Condition"),
         key=lambda c: c.get("onsetDateTime", ""),
     )
-    if conditions:
-        documents.append(make_doc("Conditions", [condition_to_text(c) for c in conditions]))
+    clinical = [c for c in conditions if not is_social_finding(c)]
+    social = [c for c in conditions if is_social_finding(c)]
+    if clinical:
+        documents.append(make_doc("Conditions", [condition_to_text(c) for c in clinical]))
+    if social:
+        documents.append(
+            make_doc("Social history", [condition_to_text(c) for c in social])
+        )
 
-    medications = sorted(
-        extract_resources(bundle, "MedicationRequest"),
-        key=lambda m: m.get("authoredOn", ""),
-    )
+    medications = extract_resources(bundle, "MedicationRequest")
     if medications:
-        documents.append(make_doc("Medications", [medication_to_text(m) for m in medications]))
+        documents.append(make_doc("Medications", summarise_medications(medications)))
 
     # One document per observation type, readings in date order
     readings = defaultdict(list)
