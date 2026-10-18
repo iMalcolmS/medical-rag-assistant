@@ -3,4 +3,6 @@ venv/
 __pycache__/
 *.pyc
 .DS_Store
-data/fhir/storage/
+
+data/
+storage/
