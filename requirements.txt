@@ -1,6 +1,7 @@
-# CPU-only PyTorch on Linux (Streamlit Cloud, CI): avoids the multi-GB CUDA build.
-# On macOS pip still picks the standard wheels, which are CPU-only anyway.
---extra-index-url https://download.pytorch.org/whl/cpu
+# CPU-only PyTorch on Linux (Streamlit Cloud): a links page with only the torch
+# CPU wheels. Unlike --extra-index-url, uv still resolves every other package
+# from PyPI. macOS keeps the standard (CPU-only) wheels.
+--find-links https://download.pytorch.org/whl/cpu/torch/
 
 # App and pipeline (versions tested together on Python 3.11)
 llama-index-core==0.14.21
