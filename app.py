@@ -95,17 +95,20 @@ st.markdown(
   -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
   border-right: 1px solid var(--separator);
 }
+/* Works with both radio DOMs: Streamlit <=1.5x (baseweb) and >=1.6x (react-aria) */
 [data-testid="stSidebar"] [data-testid="stElementContainer"]:has([data-testid="stRadio"]),
 [data-testid="stSidebar"] [data-testid="stRadio"], [data-testid="stSidebar"] [data-testid="stRadio"] > div { width: 100% !important; }
 [data-testid="stSidebar"] [role="radiogroup"] { gap: 2px; width: 100%; display: flex; flex-direction: column; align-items: stretch; }
-[data-testid="stSidebar"] [data-testid="stRadioOption"] {
-  width: 100%; box-sizing: border-box; padding: 8px 12px; border-radius: 10px; margin: 0; transition: background .15s ease;
+[data-testid="stSidebar"] [role="radiogroup"] label {
+  width: 100%; box-sizing: border-box; padding: 8px 12px; border-radius: 10px; margin: 0;
+  transition: background .15s ease, transform 100ms ease-out;
 }
-[data-testid="stSidebar"] [data-testid="stRadioOption"]:hover { background: var(--fill); }
+[data-testid="stSidebar"] [role="radiogroup"] label:hover { background: var(--fill); }
+[data-testid="stSidebar"] label[data-baseweb="radio"] > div:first-child,
 [data-testid="stSidebar"] [data-testid="stRadioOption"] > div > div:first-child { display: none; }
-[data-testid="stSidebar"] [data-testid="stRadioOption"] p { font-size: 15px; }
-[data-testid="stSidebar"] [data-testid="stRadioOption"][data-selected="true"] { background: var(--blue); }
-[data-testid="stSidebar"] [data-testid="stRadioOption"][data-selected="true"] p { color: #fff; font-weight: 600; }
+[data-testid="stSidebar"] [role="radiogroup"] label p { font-size: 15px; }
+[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) { background: var(--blue); }
+[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) p { color: #fff; font-weight: 600; }
 
 /* Text inputs, selects and the chat field: rounded fills, no hard outlines */
 [data-baseweb="input"], [data-baseweb="select"] > div, [data-testid="stChatInput"] > div {
@@ -121,9 +124,10 @@ st.markdown(
 [data-testid="stTab"] { padding: 6px 18px !important; border-radius: 8px; margin: 0 !important; height: auto !important;
                         transition: background .15s ease; }
 [data-testid="stTab"] p { font-size: 13.5px !important; font-weight: 500; color: var(--label) !important; }
-[data-testid="stTab"][data-selected="true"] { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 1px rgba(0,0,0,.04); }
-[data-testid="stTab"][data-selected="true"] p { font-weight: 600; }
-[role="tablist"] .react-aria-SelectionIndicator { display: none !important; }
+[data-testid="stTab"][aria-selected="true"] { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 1px rgba(0,0,0,.04); }
+[data-testid="stTab"][aria-selected="true"] p { font-weight: 600; }
+[role="tablist"] .react-aria-SelectionIndicator,
+[data-baseweb="tab-highlight"], [data-baseweb="tab-border"] { display: none !important; }
 [role="tabpanel"] { padding-top: 18px; }
 
 /* Header */
@@ -197,10 +201,10 @@ st.markdown(
   background: var(--label) !important; color: #fff !important; }
 [data-testid="stButtonGroup"] button[aria-checked="true"] * { color: #fff !important; }
 /* Response: feedback on press, instantly */
-[data-testid="stTab"], [data-testid="stRadioOption"], [data-testid="stButtonGroup"] button {
+[data-testid="stTab"], [data-testid="stButtonGroup"] button {
   transition: transform 100ms ease-out, background .15s ease;
 }
-[data-testid="stTab"]:active, [data-testid="stRadioOption"]:active, [data-testid="stButtonGroup"] button:active {
+[data-testid="stTab"]:active, [data-testid="stSidebar"] [role="radiogroup"] label:active, [data-testid="stButtonGroup"] button:active {
   transform: scale(.97);
 }
 /* Bright top edge: light catching the material */
@@ -218,7 +222,7 @@ st.markdown(
 /* Accessibility: honour the user's system settings */
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
-  [data-testid="stTab"]:active, [data-testid="stRadioOption"]:active { transform: none; }
+  [data-testid="stTab"]:active, [data-testid="stSidebar"] [role="radiogroup"] label:active { transform: none; }
 }
 @media (prefers-reduced-transparency: reduce) {
   .glass, .st-key-assistant, [class*="st-key-chart_"], [data-testid="stSidebar"] {
