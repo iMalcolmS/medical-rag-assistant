@@ -27,8 +27,11 @@ from llama_index.core.vector_stores import ExactMatchFilter, MetadataFilters
 
 from src.fhir_loader import bundle_to_documents
 
-DATA_DIR = "data/fhir"
-STORAGE_DIR = "storage"
+# Full local dataset (git-ignored) or, when it is absent (e.g. on Streamlit Cloud),
+# the small committed demo set and its pre-built index. Both can be overridden.
+USING_DEMO_DATA = not os.path.isdir("data/fhir")
+DATA_DIR = os.environ.get("FHIR_DATA_DIR", "demo/fhir" if USING_DEMO_DATA else "data/fhir")
+STORAGE_DIR = os.environ.get("INDEX_DIR", "demo/storage" if USING_DEMO_DATA else "storage")
 # Groq retires models regularly: override with GROQ_MODEL in .env
 DEFAULT_LLM_MODEL = "openai/gpt-oss-120b"
 LLM_CONTEXT_WINDOW = 131072

@@ -31,6 +31,8 @@ from src.patient_summary import (
 # Number of patients indexed on the first run. Changing it requires deleting
 # the storage/ folder so the index is rebuilt with the new set of patients.
 PATIENT_LIMIT = int(os.environ.get("PATIENT_LIMIT", 20))
+# Questions per browser session; protects the shared API quota of the public demo.
+MAX_QUESTIONS = int(os.environ.get("MAX_QUESTIONS", 25))
 
 SUGGESTED_QUESTIONS = [
     "Summarise the cardiovascular history",
@@ -563,8 +565,15 @@ def render_assistant(index, patient_id, first_name):
         if not history:
             st.pills("Suggestions", SUGGESTED_QUESTIONS, key="suggestion",
                      on_change=queue_suggestion, label_visibility="collapsed")
-        typed = st.chat_input("Ask a question")
+        asked = st.session_state.get("questions_asked", 0)
+        limit_reached = asked >= MAX_QUESTIONS
+        typed = st.chat_input("Demo limit reached for this session" if limit_reached else "Ask a question",
+                              disabled=limit_reached)
     question = typed or st.session_state.pop("pending_question", None)
+    if question and limit_reached:
+        question = None
+    if question:
+        st.session_state.questions_asked = asked + 1
 
     with messages:
         if not history and not question:
