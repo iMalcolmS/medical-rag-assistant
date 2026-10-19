@@ -1,0 +1,4 @@
+# Test-only dependencies: the tests use mock models, so no PyTorch,
+# no embedding download and no API key are needed (fast CI).
+llama-index-core==0.14.21
+pytest==9.1.1
