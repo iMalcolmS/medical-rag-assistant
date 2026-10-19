@@ -91,16 +91,25 @@ flowchart LR
 
 ## Results
 
-Manual checks on real Synthea patients:
+Evaluated on **45 questions with known answers** for 8 synthetic patients, generated automatically from the structured FHIR data (see `eval/`), using `openai/gpt-oss-120b` on Groq.
 
-| Question | Behaviour |
-|---|---|
-| *Which chronic conditions does the patient have?* | Lists only the active conditions with onset dates; resolved episodes are excluded |
-| *What medications has the patient been prescribed for heart disease?* | Returns the cardiovascular drugs with prescription periods and counts |
-| *What is the patient's blood type?* (not recorded by Synthea) | *"I could not find this information in the patient's record."* |
-| Any question | All retrieved excerpts belong to the selected patient |
+| Metric | Baseline | After fixes |
+|---|---|---|
+| Overall pass rate | 87% | **98%** |
+| Accuracy on answerable questions | 79% | **97%** |
+| Correct refusals on unanswerable questions | 100% | 100% |
+| Correct denials on cross-patient probes | 100% | 100% |
+| Retrieved excerpts from the selected patient only | 100% | 100% |
 
-A formal evaluation set with accuracy and refusal metrics is on the [roadmap](#roadmap).
+**What the evaluation found, and what changed:**
+- Allergies were missing from the indexed documents (0% to 100% after adding an Allergies section).
+- Newer Synthea bundles reference drugs through `medicationReference`; those appeared as "Unknown" until the loader resolved the reference.
+- The text splitter cut long sections mid-line, so a chunk could start with "5 MG Oral Tablet" without the drug name. Documents are now split between lines, and every part repeats the patient and section header.
+- The evaluation's own keyword picked a product code ("NDA020800") instead of the drug name; fixed in the scoring.
+
+Remaining failure: one diagnosis-date question where the right excerpt was not in the top 8 retrieved, a retrieval limitation that hybrid (keyword + vector) search on the roadmap targets.
+
+Full report: [`eval/report.md`](eval/report.md) and every answer in [`eval/results.csv`](eval/results.csv). Reproduce with `python -m eval.build_eval_set` then `python -m eval.run_eval`.
 
 ---
 
@@ -185,7 +194,7 @@ python -m pytest -v
 
 ## Roadmap
 
-- [ ] Evaluation set (~25 questions with known answers) measuring accuracy and correct refusals
+- [x] Evaluation set (~25 questions with known answers) measuring accuracy and correct refusals
 - [ ] Public demo on Streamlit Community Cloud
 - [ ] Docker image
 - [ ] Inline citations linking each sentence of an answer to its source excerpt

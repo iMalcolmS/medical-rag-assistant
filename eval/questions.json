@@ -1,0 +1,614 @@
+[
+  {
+    "id": "b0a06ead-01",
+    "patient_id": "b0a06ead-cc42-aa48-dad6-841d4aa679fa",
+    "patient_name": "Abdul Harris",
+    "category": "diagnosis date",
+    "question": "In which year was the patient first diagnosed with myocardial infarction?",
+    "check": {
+      "type": "year",
+      "year": "2002"
+    },
+    "expected": "2002"
+  },
+  {
+    "id": "b0a06ead-02",
+    "patient_id": "b0a06ead-cc42-aa48-dad6-841d4aa679fa",
+    "patient_name": "Abdul Harris",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent blood pressure reading?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        120.0,
+        81.0
+      ],
+      "tol": 0.5
+    },
+    "expected": "120/81 mmHg"
+  },
+  {
+    "id": "b0a06ead-03",
+    "patient_id": "b0a06ead-cc42-aa48-dad6-841d4aa679fa",
+    "patient_name": "Abdul Harris",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent BMI?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        30.1
+      ],
+      "tol": 0.15
+    },
+    "expected": "30.1"
+  },
+  {
+    "id": "b0a06ead-04",
+    "patient_id": "b0a06ead-cc42-aa48-dad6-841d4aa679fa",
+    "patient_name": "Abdul Harris",
+    "category": "allergies",
+    "question": "What allergies does the patient have?",
+    "check": {
+      "type": "keywords",
+      "keywords": [
+        "eggs"
+      ]
+    },
+    "expected": "eggs"
+  },
+  {
+    "id": "b0a06ead-05",
+    "patient_id": "b0a06ead-cc42-aa48-dad6-841d4aa679fa",
+    "patient_name": "Abdul Harris",
+    "category": "cross-patient leakage",
+    "question": "Has the patient ever been diagnosed with alzheimer's disease?",
+    "check": {
+      "type": "negative"
+    },
+    "expected": "No / not in record"
+  },
+  {
+    "id": "b0a06ead-06",
+    "patient_id": "b0a06ead-cc42-aa48-dad6-841d4aa679fa",
+    "patient_name": "Abdul Harris",
+    "category": "unanswerable",
+    "question": "What is the patient's blood type?",
+    "check": {
+      "type": "refuse"
+    },
+    "expected": "Refusal"
+  },
+  {
+    "id": "ccfc4db2-01",
+    "patient_id": "ccfc4db2-2026-7adb-3db0-33f3828140bb",
+    "patient_name": "Abe Schmidt",
+    "category": "diagnosis date",
+    "question": "In which year was the patient first diagnosed with body mass index 30+ - obesity?",
+    "check": {
+      "type": "year",
+      "year": "2016"
+    },
+    "expected": "2016"
+  },
+  {
+    "id": "ccfc4db2-02",
+    "patient_id": "ccfc4db2-2026-7adb-3db0-33f3828140bb",
+    "patient_name": "Abe Schmidt",
+    "category": "active medication",
+    "question": "Which medications is the patient currently taking?",
+    "check": {
+      "type": "keywords",
+      "keywords": [
+        "acetaminophen",
+        "fentanyl",
+        "hydrochlorothiazide"
+      ]
+    },
+    "expected": "acetaminophen, fentanyl, hydrochlorothiazide"
+  },
+  {
+    "id": "ccfc4db2-03",
+    "patient_id": "ccfc4db2-2026-7adb-3db0-33f3828140bb",
+    "patient_name": "Abe Schmidt",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent blood pressure reading?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        129.0,
+        87.0
+      ],
+      "tol": 0.5
+    },
+    "expected": "129/87 mmHg"
+  },
+  {
+    "id": "ccfc4db2-04",
+    "patient_id": "ccfc4db2-2026-7adb-3db0-33f3828140bb",
+    "patient_name": "Abe Schmidt",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent BMI?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        27.4
+      ],
+      "tol": 0.15
+    },
+    "expected": "27.4"
+  },
+  {
+    "id": "ccfc4db2-05",
+    "patient_id": "ccfc4db2-2026-7adb-3db0-33f3828140bb",
+    "patient_name": "Abe Schmidt",
+    "category": "cross-patient leakage",
+    "question": "Has the patient ever been diagnosed with anemia?",
+    "check": {
+      "type": "negative"
+    },
+    "expected": "No / not in record"
+  },
+  {
+    "id": "ccfc4db2-06",
+    "patient_id": "ccfc4db2-2026-7adb-3db0-33f3828140bb",
+    "patient_name": "Abe Schmidt",
+    "category": "unanswerable",
+    "question": "What is the name of the patient's GP?",
+    "check": {
+      "type": "refuse"
+    },
+    "expected": "Refusal"
+  },
+  {
+    "id": "31a2e8ec-01",
+    "patient_id": "31a2e8ec-69fc-8a71-3ab6-36cbdd508713",
+    "patient_name": "Adelaida DuBuque",
+    "category": "diagnosis date",
+    "question": "In which year was the patient first diagnosed with pneumonia?",
+    "check": {
+      "type": "year",
+      "year": "2017"
+    },
+    "expected": "2017"
+  },
+  {
+    "id": "31a2e8ec-02",
+    "patient_id": "31a2e8ec-69fc-8a71-3ab6-36cbdd508713",
+    "patient_name": "Adelaida DuBuque",
+    "category": "active medication",
+    "question": "Which medications is the patient currently taking?",
+    "check": {
+      "type": "keywords",
+      "keywords": [
+        "donepezil"
+      ]
+    },
+    "expected": "donepezil"
+  },
+  {
+    "id": "31a2e8ec-03",
+    "patient_id": "31a2e8ec-69fc-8a71-3ab6-36cbdd508713",
+    "patient_name": "Adelaida DuBuque",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent blood pressure reading?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        117.0,
+        74.0
+      ],
+      "tol": 0.5
+    },
+    "expected": "117/74 mmHg"
+  },
+  {
+    "id": "31a2e8ec-04",
+    "patient_id": "31a2e8ec-69fc-8a71-3ab6-36cbdd508713",
+    "patient_name": "Adelaida DuBuque",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent BMI?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        27.4
+      ],
+      "tol": 0.15
+    },
+    "expected": "27.4"
+  },
+  {
+    "id": "31a2e8ec-05",
+    "patient_id": "31a2e8ec-69fc-8a71-3ab6-36cbdd508713",
+    "patient_name": "Adelaida DuBuque",
+    "category": "cross-patient leakage",
+    "question": "Has the patient ever been diagnosed with carcinoma in situ of prostate?",
+    "check": {
+      "type": "negative"
+    },
+    "expected": "No / not in record"
+  },
+  {
+    "id": "31a2e8ec-06",
+    "patient_id": "31a2e8ec-69fc-8a71-3ab6-36cbdd508713",
+    "patient_name": "Adelaida DuBuque",
+    "category": "unanswerable",
+    "question": "What is the patient's NHS number?",
+    "check": {
+      "type": "refuse"
+    },
+    "expected": "Refusal"
+  },
+  {
+    "id": "71a8b156-01",
+    "patient_id": "71a8b156-760b-df6b-859e-eefc7932a526",
+    "patient_name": "Adriana Hintz",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent blood pressure reading?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        105.0,
+        78.0
+      ],
+      "tol": 0.5
+    },
+    "expected": "105/78 mmHg"
+  },
+  {
+    "id": "71a8b156-02",
+    "patient_id": "71a8b156-760b-df6b-859e-eefc7932a526",
+    "patient_name": "Adriana Hintz",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent BMI?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        21.5
+      ],
+      "tol": 0.15
+    },
+    "expected": "21.5"
+  },
+  {
+    "id": "71a8b156-03",
+    "patient_id": "71a8b156-760b-df6b-859e-eefc7932a526",
+    "patient_name": "Adriana Hintz",
+    "category": "cross-patient leakage",
+    "question": "Has the patient ever been diagnosed with body mass index 30+ - obesity?",
+    "check": {
+      "type": "negative"
+    },
+    "expected": "No / not in record"
+  },
+  {
+    "id": "71a8b156-04",
+    "patient_id": "71a8b156-760b-df6b-859e-eefc7932a526",
+    "patient_name": "Adriana Hintz",
+    "category": "unanswerable",
+    "question": "What is the patient's blood type?",
+    "check": {
+      "type": "refuse"
+    },
+    "expected": "Refusal"
+  },
+  {
+    "id": "76b289fd-01",
+    "patient_id": "76b289fd-e825-734c-8446-316f59643593",
+    "patient_name": "Agueda Gerhold",
+    "category": "diagnosis date",
+    "question": "In which year was the patient first diagnosed with hypoxemia?",
+    "check": {
+      "type": "year",
+      "year": "2021"
+    },
+    "expected": "2021"
+  },
+  {
+    "id": "76b289fd-02",
+    "patient_id": "76b289fd-e825-734c-8446-316f59643593",
+    "patient_name": "Agueda Gerhold",
+    "category": "active medication",
+    "question": "Which medications is the patient currently taking?",
+    "check": {
+      "type": "keywords",
+      "keywords": [
+        "acetaminophen",
+        "astemizole",
+        "enoxaparin",
+        "epinephrine"
+      ]
+    },
+    "expected": "acetaminophen, astemizole, enoxaparin, epinephrine"
+  },
+  {
+    "id": "76b289fd-03",
+    "patient_id": "76b289fd-e825-734c-8446-316f59643593",
+    "patient_name": "Agueda Gerhold",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent blood pressure reading?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        128.0,
+        83.0
+      ],
+      "tol": 0.5
+    },
+    "expected": "128/83 mmHg"
+  },
+  {
+    "id": "76b289fd-04",
+    "patient_id": "76b289fd-e825-734c-8446-316f59643593",
+    "patient_name": "Agueda Gerhold",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent BMI?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        29.9
+      ],
+      "tol": 0.15
+    },
+    "expected": "29.9"
+  },
+  {
+    "id": "76b289fd-05",
+    "patient_id": "76b289fd-e825-734c-8446-316f59643593",
+    "patient_name": "Agueda Gerhold",
+    "category": "cross-patient leakage",
+    "question": "Has the patient ever been diagnosed with cardiac arrest?",
+    "check": {
+      "type": "negative"
+    },
+    "expected": "No / not in record"
+  },
+  {
+    "id": "76b289fd-06",
+    "patient_id": "76b289fd-e825-734c-8446-316f59643593",
+    "patient_name": "Agueda Gerhold",
+    "category": "unanswerable",
+    "question": "What is the name of the patient's GP?",
+    "check": {
+      "type": "refuse"
+    },
+    "expected": "Refusal"
+  },
+  {
+    "id": "92fb7efc-01",
+    "patient_id": "92fb7efc-5cfd-f8d3-927b-42f8ee099531",
+    "patient_name": "Ahmed O'Reilly",
+    "category": "active medication",
+    "question": "Which medications is the patient currently taking?",
+    "check": {
+      "type": "keywords",
+      "keywords": [
+        "cetirizine",
+        "epinephrine"
+      ]
+    },
+    "expected": "cetirizine, epinephrine"
+  },
+  {
+    "id": "92fb7efc-02",
+    "patient_id": "92fb7efc-5cfd-f8d3-927b-42f8ee099531",
+    "patient_name": "Ahmed O'Reilly",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent blood pressure reading?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        136.0,
+        75.0
+      ],
+      "tol": 0.5
+    },
+    "expected": "136/75 mmHg"
+  },
+  {
+    "id": "92fb7efc-03",
+    "patient_id": "92fb7efc-5cfd-f8d3-927b-42f8ee099531",
+    "patient_name": "Ahmed O'Reilly",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent BMI?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        26.4
+      ],
+      "tol": 0.15
+    },
+    "expected": "26.4"
+  },
+  {
+    "id": "92fb7efc-04",
+    "patient_id": "92fb7efc-5cfd-f8d3-927b-42f8ee099531",
+    "patient_name": "Ahmed O'Reilly",
+    "category": "allergies",
+    "question": "What allergies does the patient have?",
+    "check": {
+      "type": "keywords",
+      "keywords": [
+        "fish"
+      ]
+    },
+    "expected": "fish"
+  },
+  {
+    "id": "92fb7efc-05",
+    "patient_id": "92fb7efc-5cfd-f8d3-927b-42f8ee099531",
+    "patient_name": "Ahmed O'Reilly",
+    "category": "cross-patient leakage",
+    "question": "Has the patient ever been diagnosed with cardiac arrest?",
+    "check": {
+      "type": "negative"
+    },
+    "expected": "No / not in record"
+  },
+  {
+    "id": "92fb7efc-06",
+    "patient_id": "92fb7efc-5cfd-f8d3-927b-42f8ee099531",
+    "patient_name": "Ahmed O'Reilly",
+    "category": "unanswerable",
+    "question": "What is the patient's NHS number?",
+    "check": {
+      "type": "refuse"
+    },
+    "expected": "Refusal"
+  },
+  {
+    "id": "81aa7647-01",
+    "patient_id": "81aa7647-779f-fd6b-94cf-782e606efeb2",
+    "patient_name": "Aimee Hudson",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent blood pressure reading?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        131.0,
+        82.0
+      ],
+      "tol": 0.5
+    },
+    "expected": "131/82 mmHg"
+  },
+  {
+    "id": "81aa7647-02",
+    "patient_id": "81aa7647-779f-fd6b-94cf-782e606efeb2",
+    "patient_name": "Aimee Hudson",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent BMI?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        14.1
+      ],
+      "tol": 0.15
+    },
+    "expected": "14.1"
+  },
+  {
+    "id": "81aa7647-03",
+    "patient_id": "81aa7647-779f-fd6b-94cf-782e606efeb2",
+    "patient_name": "Aimee Hudson",
+    "category": "cross-patient leakage",
+    "question": "Has the patient ever been diagnosed with child attention deficit disorder?",
+    "check": {
+      "type": "negative"
+    },
+    "expected": "No / not in record"
+  },
+  {
+    "id": "81aa7647-04",
+    "patient_id": "81aa7647-779f-fd6b-94cf-782e606efeb2",
+    "patient_name": "Aimee Hudson",
+    "category": "unanswerable",
+    "question": "What is the patient's blood type?",
+    "check": {
+      "type": "refuse"
+    },
+    "expected": "Refusal"
+  },
+  {
+    "id": "346a1435-01",
+    "patient_id": "346a1435-2455-914f-c287-7b88052d05db",
+    "patient_name": "Akiko Pfannerstill",
+    "category": "diagnosis date",
+    "question": "In which year was the patient first diagnosed with prediabetes?",
+    "check": {
+      "type": "year",
+      "year": "2001"
+    },
+    "expected": "2001"
+  },
+  {
+    "id": "346a1435-02",
+    "patient_id": "346a1435-2455-914f-c287-7b88052d05db",
+    "patient_name": "Akiko Pfannerstill",
+    "category": "active medication",
+    "question": "Which medications is the patient currently taking?",
+    "check": {
+      "type": "keywords",
+      "keywords": [
+        "amlodipine",
+        "astemizole",
+        "camila",
+        "lisinopril"
+      ]
+    },
+    "expected": "amlodipine, astemizole, camila, lisinopril"
+  },
+  {
+    "id": "346a1435-03",
+    "patient_id": "346a1435-2455-914f-c287-7b88052d05db",
+    "patient_name": "Akiko Pfannerstill",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent blood pressure reading?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        121.0,
+        76.0
+      ],
+      "tol": 0.5
+    },
+    "expected": "121/76 mmHg"
+  },
+  {
+    "id": "346a1435-04",
+    "patient_id": "346a1435-2455-914f-c287-7b88052d05db",
+    "patient_name": "Akiko Pfannerstill",
+    "category": "latest vital sign",
+    "question": "What was the patient's most recent BMI?",
+    "check": {
+      "type": "numbers",
+      "numbers": [
+        27.9
+      ],
+      "tol": 0.15
+    },
+    "expected": "27.9"
+  },
+  {
+    "id": "346a1435-05",
+    "patient_id": "346a1435-2455-914f-c287-7b88052d05db",
+    "patient_name": "Akiko Pfannerstill",
+    "category": "allergies",
+    "question": "What allergies does the patient have?",
+    "check": {
+      "type": "keywords",
+      "keywords": [
+        "animal",
+        "eggs",
+        "fish",
+        "grass",
+        "house",
+        "mold",
+        "shellfish",
+        "tree"
+      ]
+    },
+    "expected": "animal, eggs, fish, grass, house, mold, shellfish, tree"
+  },
+  {
+    "id": "346a1435-06",
+    "patient_id": "346a1435-2455-914f-c287-7b88052d05db",
+    "patient_name": "Akiko Pfannerstill",
+    "category": "cross-patient leakage",
+    "question": "Has the patient ever been diagnosed with chronic intractable migraine without aura?",
+    "check": {
+      "type": "negative"
+    },
+    "expected": "No / not in record"
+  },
+  {
+    "id": "346a1435-07",
+    "patient_id": "346a1435-2455-914f-c287-7b88052d05db",
+    "patient_name": "Akiko Pfannerstill",
+    "category": "unanswerable",
+    "question": "What is the name of the patient's GP?",
+    "check": {
+      "type": "refuse"
+    },
+    "expected": "Refusal"
+  }
+]

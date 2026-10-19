@@ -75,7 +75,9 @@ def configure_settings():
         context_window=LLM_CONTEXT_WINDOW,
     )
     Settings.embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL)
-    Settings.node_parser = SentenceSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
+    Settings.node_parser = SentenceSplitter(
+        chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP, paragraph_separator="\n"
+    )
 
 
 def list_bundle_files(data_dir=DATA_DIR, limit=None):

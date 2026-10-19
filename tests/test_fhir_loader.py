@@ -54,3 +54,48 @@ def test_risk_level_heuristic():
 def test_timeline_is_sorted_by_date(bundle_path):
     dates = [event["date"] for event in extract_timeline(load_fhir_bundle(bundle_path))]
     assert dates == sorted(dates)
+
+
+def test_allergies_are_indexed(bundle_path):
+    # The fixture patient has no AllergyIntolerance: the record says so explicitly
+    assert "No allergies recorded" in docs_by_section(bundle_path)["Allergies"]["text"]
+
+
+def test_medication_reference_is_resolved(tmp_path):
+    import json
+    bundle = {"resourceType": "Bundle", "entry": [
+        {"resource": {"resourceType": "Patient", "id": "p9", "name": [{"given": ["Ana"], "family": "Lopes"}]}},
+        {"fullUrl": "urn:uuid:med-1", "resource": {"resourceType": "Medication", "id": "med-1",
+                                                  "code": {"text": "amLODIPine 5 MG Oral Tablet"}}},
+        {"resource": {"resourceType": "MedicationRequest", "medicationReference": {"reference": "urn:uuid:med-1"},
+                      "authoredOn": "2021-04-07T00:00:00Z", "status": "active"}},
+        {"resource": {"resourceType": "AllergyIntolerance", "code": {"text": "Eggs (edible)"},
+                      "category": ["food"], "criticality": "low"}},
+    ]}
+    path = tmp_path / "b.json"
+    path.write_text(json.dumps(bundle))
+    sections = docs_by_section(str(path))
+    assert "amLODIPine 5 MG Oral Tablet" in sections["Medications"]["text"]
+    assert "Eggs (edible) | category: food | criticality: low" in sections["Allergies"]["text"]
+
+
+def test_long_sections_split_between_lines_with_header(tmp_path):
+    import json
+    conditions = [{"resource": {"resourceType": "Condition", "code": {"text": f"Condition number {i} (disorder)"},
+                                "onsetDateTime": f"20{i:02d}-01-01T00:00:00Z",
+                                "clinicalStatus": {"coding": [{"code": "active"}]}}} for i in range(40)]
+    bundle = {"resourceType": "Bundle", "entry": [
+        {"resource": {"resourceType": "Patient", "id": "p8", "name": [{"given": ["Ana"], "family": "Lopes"}]}},
+        *conditions]}
+    path = tmp_path / "b.json"
+    path.write_text(json.dumps(bundle))
+    parts = [d for d in bundle_to_documents(str(path)) if d["metadata"]["section"] == "Conditions"]
+    assert len(parts) > 1
+    lines_seen = []
+    for part in parts:
+        header, section_line, *lines = part["text"].split("\n")
+        assert header == "Patient: Ana Lopes (ID p8)"
+        assert section_line.startswith("Section: Conditions (part ")
+        assert len("\n".join(lines)) <= 500
+        lines_seen += lines
+    assert len(lines_seen) == 40 and all(line.startswith("Condition number") for line in lines_seen)

@@ -16,6 +16,8 @@ from src.fhir_loader import (
     extract_resources,
     get_patient_name,
     is_social_finding,
+    medication_name,
+    reference_index,
 )
 
 # Vital signs and labs shown as headline tiles, in display order.
@@ -100,9 +102,10 @@ def _neg_date(iso):
 
 def medication_list(bundle):
     """One row per drug: first/last prescription, count and latest status."""
+    references = reference_index(bundle)
     by_drug = defaultdict(list)
     for m in extract_resources(bundle, "MedicationRequest"):
-        by_drug[_concept_text(m.get("medicationCodeableConcept"))].append(
+        by_drug[medication_name(m, references)].append(
             (m.get("authoredOn", ""), m.get("status", "unknown"))
         )
     rows = []
