@@ -2,5 +2,7 @@ llama-index-core
 llama-index-llms-groq
 llama-index-embeddings-huggingface
 python-dotenv
-streamlit
+streamlit>=1.50
+altair>=5
+pandas
 pytest
